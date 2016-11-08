@@ -621,3 +621,4 @@ def get_windows_action_manager(client):
 
     action_manager = WindowsActionManagers[windows_type]
     return action_manager(client=client)
+

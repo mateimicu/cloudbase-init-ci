@@ -59,6 +59,7 @@ class BaseTempestBackend(base_backend.CloudBackend):
         if userdata:
             # NOTE(dtoncu): `encodestring` is a deprecated alias in Python 3.*;
             # `encodebytes` can be used instead.
+            #pylint: disable=maybe-no-member
             if six.PY2:
                 encode_function = base64.encodestring
             else:
