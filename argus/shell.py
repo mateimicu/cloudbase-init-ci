@@ -16,7 +16,9 @@
 from __future__ import print_function
 
 import argparse
+import functools
 import os
+import signal
 import subprocess
 import sys
 import tempfile
@@ -32,6 +34,15 @@ from six.moves import urllib_parse as urlparse
 from os_testr import subunit2html
 
 CONFIG = argus_config.CONFIG
+
+
+def _send_signal_to_process(process, sign, _):
+    """Send the signal to the process
+
+    :param process: Popen object
+    :param sign: Signal number
+    """
+    process.send_signal(sign)
 
 
 def _download_resource(url, location):
@@ -184,6 +195,10 @@ def _start_testr(parallel, tests, directory):
         cmd.extend(args)
 
     process = subprocess.Popen(cmd, cwd=directory, close_fds=True)
+
+    # Set the appropriate signal handler
+    signal.signal(signal.SIGTERM,
+                  functools.partial(_send_signal_to_process, process))
     return process
 
 
