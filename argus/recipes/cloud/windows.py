@@ -580,16 +580,31 @@ class CloudbaseinitPageFilePlugin(CloudbaseinitEnableTrim):
             service_type)
         LOG.info("Injecting page file options in the config file.")
 
-        self._cbinit_unattend_conf.set_conf_value(
+        self._cbinit_conf.set_conf_value(
             name="page_file_volume_labels", value="Temporary Storage")
-        self._cbinit_unattend_conf.set_conf_value(
+        self._cbinit_conf.set_conf_value(
             name="page_file_volume_mount_points", value="C:\\")
-        self._cbinit_unattend_conf.set_conf_value(
+        self._cbinit_conf.set_conf_value(
             name="plugins",
             value="cloudbaseinit.plugins.windows.pagefiles.PageFilesPlugin")
 
 
-class CloudbaseinitIndependentPlugins(CloudbaseinitPageFilePlugin):
+class CloudbaseinitDisplayTimeoutPlugin(CloudbaseinitPageFilePlugin):
+    """Recipe for testing the DisplayIdleTimeout plugin"""
+
+    def prepare_cbinit_config(self, service_type):
+        super(CloudbaseinitDisplayTimeoutPlugin, self).prepare_cbinit_config(
+            service_type)
+        LOG.info("Injecting idle display options in the config file.")
+        self._cbinit_conf.set_conf_value(
+            name="display_idle_timeout", value="123")
+        self._cbinit_conf.set_conf_value(
+            name="plugins",
+            value="cloudbaseinit.plugins.windows.displayidletimeout."
+                  "DisplayIdleTimeoutConfigPlugin")
+
+
+class CloudbaseinitIndependentPlugins(CloudbaseinitDisplayTimeoutPlugin):
     """Recipe for independent plugins."""
 
 

@@ -231,3 +231,12 @@ class TestPageFilePlugin(base.BaseTestCase):
         result = self._introspection.get_swap_status(
             expected_swap_status=expected)
         self.assertTrue(result)
+
+
+class TestDisplayTimeoutPlugin(base.BaseTestCase):
+
+    def test_display_timeout_set(self):
+        if self._introspection.get_instance_os_version() < (6, 2):
+            raise unittest.SkipTest('OS Version not supported')
+        result = self._introspection.get_power_setting_value()
+        self.assertTrue(result)
