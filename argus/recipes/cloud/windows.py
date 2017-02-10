@@ -596,7 +596,7 @@ class CloudbaseinitDisplayTimeoutPlugin(CloudbaseinitPageFilePlugin):
         super(CloudbaseinitDisplayTimeoutPlugin, self).prepare_cbinit_config(
             service_type)
         LOG.info("Injecting idle display options in the config file.")
-        self._cbinit_unattend_conf.set_conf_value(
+        self._cbinit_unattend_conf.append_conf_value(
             name="display_idle_timeout", value="123")
         self._cbinit_unattend_conf.append_conf_value(
             name="plugins",
