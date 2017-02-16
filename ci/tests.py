@@ -86,7 +86,8 @@ class ScenarioLongHostname(BaseWindowsScenario):
 
 
 class ScenarioIndependentPlugins(BaseWindowsScenario):
-    test_classes = (test_smoke.TestDisplayTimeoutPlugin,
+    test_classes = (test_smoke.TestBCDPlugin,
+                    test_smoke.TestDisplayTimeoutPlugin,
                     test_smoke.TestTrimPlugin,
                     test_smoke.TestPageFilePlugin)
     recipe_type = recipe.CloudbaseinitIndependentPlugins
