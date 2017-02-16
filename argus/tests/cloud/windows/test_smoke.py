@@ -249,3 +249,25 @@ class TestDisplayTimeoutPlugin(base.BaseTestCase):
     def test_display_timeout_set(self):
         result = self._introspection.get_power_setting_value()
         self.assertTrue(result)
+
+
+class TestBCDPlugin(base.BaseTestCase):
+
+    def test_bcd_boot_status_policy(self):
+        stdout = self._introspection.get_bcd_field('bootstatuspolicy')
+        self.assertIn('IgnoreAllFailures', stdout)
+
+    @util.skip_on_os([util.WINDOWS_NANO], "OS Version not supported")
+    def test_bcd_enable_auto_recovery(self):
+        stdout = self._introspection.get_bcd_field('recoveryenabled')
+        self.assertIn('Yes', stdout)
+
+    @util.skip_on_os([util.WINDOWS_NANO], "OS Version not supported")
+    def test_set_unique_boot_disk_id(self):
+        cmd = r'"{}" -fileLocation {}'.format(r"C:\\get_uniquediskid.ps1",
+                                              r"C:\\diskidnew")
+        self._backend.remote_client.run_command_with_retry(
+            cmd, command_type=util.POWERSHELL_SCRIPT_BYPASS)
+        old_id = self._backend.remote_client.read_file(r"C:\\diskid")
+        new_id = self._backend.remote_client.read_file(r"C:\\diskidnew")
+        self.assertNotEqual(old_id, new_id)
