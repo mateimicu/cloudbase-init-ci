@@ -632,7 +632,22 @@ class CloudbaseinitBootConfigPlugin(CloudbaseinitDisplayTimeoutPlugin):
                   "BCDConfigPlugin")
 
 
-class CloudbaseinitIndependentPlugins(CloudbaseinitBootConfigPlugin):
+class CloudbaseinitRDPSettingsPlugin(CloudbaseinitBootConfigPlugin):
+    """Recipe for testing the RDPSettingsPlugin plugin"""
+
+    def prepare_cbinit_config(self, service_type):
+        super(CloudbaseinitRDPSettingsPlugin, self).prepare_cbinit_config(
+            service_type)
+        LOG.info("Injecting rdp setting options in the config file.")
+        self._cbinit_unattend_conf.append_conf_value(
+            name="rdp_set_keepalive", value="true")
+        self._cbinit_unattend_conf.append_conf_value(
+            name="plugins",
+            value="cloudbaseinit.plugins.windows.rdp."
+                  "RDPSettingsPlugin")
+
+
+class CloudbaseinitIndependentPlugins(CloudbaseinitRDPSettingsPlugin):
     """Recipe for independent plugins."""
 
 
