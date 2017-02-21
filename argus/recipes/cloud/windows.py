@@ -596,7 +596,7 @@ class CloudbaseinitDisplayTimeoutPlugin(CloudbaseinitPageFilePlugin):
         super(CloudbaseinitDisplayTimeoutPlugin, self).prepare_cbinit_config(
             service_type)
         LOG.info("Injecting idle display options in the config file.")
-        self._cbinit_unattend_conf.append_conf_value(
+        self._cbinit_unattend_conf.set_conf_value(
             name="display_idle_timeout", value="123")
         self._cbinit_unattend_conf.append_conf_value(
             name="plugins",
@@ -618,17 +618,19 @@ class CloudbaseinitBootConfigPlugin(CloudbaseinitDisplayTimeoutPlugin):
         super(CloudbaseinitBootConfigPlugin, self).prepare_cbinit_config(
             service_type)
         LOG.info("Injecting Boot config options in the config file.")
-        self._cbinit_conf.append_conf_value(
+        self._cbinit_conf.set_conf_value(
             name="bcd_enable_auto_recovery", value="True")
-        self._cbinit_conf.append_conf_value(
+        self._cbinit_conf.set_conf_value(
             name="set_unique_boot_disk_id", value="True")
-        self._cbinit_conf.append_conf_value(
+        self._cbinit_unattend_conf.set_conf_value(
             name="bcd_boot_status_policy", value="ignoreallfailures")
+        self._cbinit_unattend_conf.append_conf_value(
+            name="plugins",
+            value="cloudbaseinit.plugins.windows.bootconfig."
+                  "BootStatusPolicyPlugin")
         self._cbinit_conf.append_conf_value(
             name="plugins",
             value="cloudbaseinit.plugins.windows.bootconfig."
-                  "BootStatusPolicyPlugin,"
-                  "cloudbaseinit.plugins.windows.bootconfig."
                   "BCDConfigPlugin")
 
 
@@ -647,7 +649,24 @@ class CloudbaseinitRDPSettingsPlugin(CloudbaseinitBootConfigPlugin):
                   "RDPSettingsPlugin")
 
 
-class CloudbaseinitIndependentPlugins(CloudbaseinitRDPSettingsPlugin):
+class CloudbaseinitKMSHostPlugin(CloudbaseinitRDPSettingsPlugin):
+    """Recipe for testing the kms_host option."""
+
+    def prepare_cbinit_config(self, service_type):
+        super(CloudbaseinitKMSHostPlugin, self).prepare_cbinit_config(
+            service_type)
+        LOG.info("Injecting kms_host options in the config file.")
+        self._cbinit_conf.set_conf_value(
+            name="activate_windows", value="True")
+        self._cbinit_conf.set_conf_value(
+            name="kms_host", value="127.0.0.1:1688")
+        self._cbinit_conf.append_conf_value(
+            name="plugins",
+            value="cloudbaseinit.plugins.windows.licensing."
+                  "WindowsLicensingPlugin")
+
+
+class CloudbaseinitIndependentPlugins(CloudbaseinitKMSHostPlugin):
     """Recipe for independent plugins."""
 
 
