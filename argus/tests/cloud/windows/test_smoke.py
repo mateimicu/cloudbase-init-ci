@@ -279,3 +279,13 @@ class TestRDPPlugin(base.BaseTestCase):
         stdout = self._introspection.get_rdp_settings()
         for query_value in stdout:
             self.assertIn("1", query_value)
+
+
+class TestKMSHost(base.BaseTestCase):
+
+    @util.skip_on_os([util.WINDOWS_NANO], "OS Version not supported")
+    def test_kms_host_set(self):
+        stdout = self._introspection.get_kms_host_settings()
+        expected_values = ["127.0.0.1", "1688"]
+        for kms_value in expected_values:
+            self.assertIn(kms_value, stdout)

@@ -462,3 +462,11 @@ class InstanceIntrospection(base.CloudInstanceIntrospection):
             cmd = r"(Get-ItemProperty '{}').{}".format(swap_query, query)
             stdout.append(self.remote_client.run_command_verbose(cmd))
         return stdout
+
+    def get_kms_host_settings(self):
+        licensing_query = (r"HKLM:\SOFTWARE\Microsoft\Windows "
+                           r"NT\CurrentVersion\SoftwareProtectionPlatform")
+        cmd = (r"(Get-ItemProperty '{}') | findstr /R /C"
+               r":'KeyManagementService'".format(licensing_query))
+        stdout = self.remote_client.run_command_verbose(cmd)
+        return stdout
