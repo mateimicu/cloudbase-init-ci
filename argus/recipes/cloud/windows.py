@@ -669,6 +669,19 @@ class CloudbaseinitKMSHostPlugin(CloudbaseinitRecipe):
                   "WindowsLicensingPlugin")
 
 
+class CloudbaseinitUpdatePlugin(CloudbaseinitRecipe):
+    """Recipe for testing the update plugin."""
+
+    def prepare_cbinit_config(self, service_type):
+        LOG.info("Injecting update options in the config file.")
+        self._cbinit_unattend_conf.set_conf_value(
+            name="enable_automatic_updates", value="True")
+        self._cbinit_unattend_conf.append_conf_value(
+            name="plugins",
+            value="cloudbaseinit.plugins.windows.updates."
+                  "WindowsAutoUpdatesPlugin")
+
+
 class CloudbaseinitIndependentPlugins(CloudbaseinitRecipe):
     """Recipe for independent plugins."""
     METHODS = ('prepare_cbinit_config',
@@ -676,7 +689,7 @@ class CloudbaseinitIndependentPlugins(CloudbaseinitRecipe):
     RECIPES = (CloudbaseinitEnableTrim, CloudbaseinitSANPolicy,
                CloudbaseinitPageFilePlugin, CloudbaseinitDisplayTimeoutPlugin,
                CloudbaseinitBootConfigPlugin, CloudbaseinitRDPSettingsPlugin,
-               CloudbaseinitKMSHostPlugin)
+               CloudbaseinitKMSHostPlugin, CloudbaseinitUpdatePlugin)
 
     def prepare_cbinit_config(self, service_type):
         super(CloudbaseinitIndependentPlugins, self).prepare_cbinit_config(

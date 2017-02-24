@@ -93,7 +93,8 @@ class ScenarioIndependentPlugins(BaseWindowsScenario):
                     test_smoke.TestBCDPlugin,
                     test_smoke.TestDisplayTimeoutPlugin,
                     test_smoke.TestRDPPlugin,
-                    test_smoke.TestKMSHost)
+                    test_smoke.TestKMSHost,
+                    test_smoke.TestUpdatesPlugin)
 
     recipe_type = recipe.CloudbaseinitIndependentPlugins
 

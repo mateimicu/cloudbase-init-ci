@@ -289,3 +289,13 @@ class TestKMSHost(base.BaseTestCase):
         expected_values = ["127.0.0.1", "1688"]
         for kms_value in expected_values:
             self.assertIn(kms_value, stdout)
+
+
+class TestUpdatesPlugin(base.BaseTestCase):
+
+    @util.skip_on_os([util.WINDOWS_NANO], "OS Version not supported")
+    def test_updates_set_automatic(self):
+        if self._introspection.get_instance_os_version() == (6, 2):
+            raise unittest.SkipTest('OS Version not supported')
+        stdout = self._introspection.get_update_settings_policy()
+        self.assertEqual(stdout, "4")
