@@ -466,3 +466,9 @@ class InstanceIntrospection(base.CloudInstanceIntrospection):
                r":'KeyManagementService'".format(licensing_query))
         stdout = self.remote_client.run_command_verbose(cmd)
         return stdout
+
+    def get_update_settings_policy(self):
+        update_cmd = ('(New-Object -ComObject "Microsoft.Update.AutoUpdate")'
+                      '.Settings.NotificationLevel')
+        stdout = self.remote_client.run_command_verbose(update_cmd)
+        return stdout

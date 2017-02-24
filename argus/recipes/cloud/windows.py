@@ -666,7 +666,22 @@ class CloudbaseinitKMSHostPlugin(CloudbaseinitRDPSettingsPlugin):
                   "WindowsLicensingPlugin")
 
 
-class CloudbaseinitIndependentPlugins(CloudbaseinitKMSHostPlugin):
+class CloudbaseinitUpdatePlugin(CloudbaseinitKMSHostPlugin):
+    """Recipe for testing the update plugin."""
+
+    def prepare_cbinit_config(self, service_type):
+        super(CloudbaseinitUpdatePlugin, self).prepare_cbinit_config(
+            service_type)
+        LOG.info("Injecting update options in the config file.")
+        self._cbinit_unattend_conf.set_conf_value(
+            name="enable_automatic_updates", value="True")
+        self._cbinit_unattend_conf.append_conf_value(
+            name="plugins",
+            value="cloudbaseinit.plugins.windows.updates."
+                  "WindowsAutoUpdatesPlugin")
+
+
+class CloudbaseinitIndependentPlugins(CloudbaseinitUpdatePlugin):
     """Recipe for independent plugins."""
 
 

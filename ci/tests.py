@@ -86,7 +86,8 @@ class ScenarioLongHostname(BaseWindowsScenario):
 
 
 class ScenarioIndependentPlugins(BaseWindowsScenario):
-    test_classes = (test_smoke.TestKMSHost,
+    test_classes = (test_smoke.TestUpdatesPlugin,
+                    test_smoke.TestKMSHost,
                     test_smoke.TestRDPPlugin,
                     test_smoke.TestBCDPlugin,
                     test_smoke.TestDisplayTimeoutPlugin,
