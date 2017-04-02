@@ -257,12 +257,10 @@ class TestBCDPlugin(base.BaseTestCase):
         stdout = self._introspection.get_bcd_field('bootstatuspolicy')
         self.assertIn('IgnoreAllFailures', stdout)
 
-    @util.skip_on_os([util.WINDOWS_NANO], "OS Version not supported")
     def test_bcd_enable_auto_recovery(self):
         stdout = self._introspection.get_bcd_field('recoveryenabled')
         self.assertIn('Yes', stdout)
 
-    @util.skip_on_os([util.WINDOWS_NANO], "OS Version not supported")
     def test_set_unique_boot_disk_id(self):
         cmd = r'"{}" -fileLocation {}'.format(r"C:\\get_uniquediskid.ps1",
                                               r"C:\\diskidnew")
