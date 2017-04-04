@@ -50,6 +50,7 @@ class NetworkWindowsBackend(tempest_backend.BaseWindowsTempestBackend):
         All these networks will be attached to the newly created
         instance without letting nova to handle this part.
         """
+        tenant_id = self._manager.primary_credentials().tenant_id
         _networks = self._manager.networks_client.list_networks()
         try:
             _networks = _networks["networks"]
@@ -57,7 +58,9 @@ class NetworkWindowsBackend(tempest_backend.BaseWindowsTempestBackend):
             raise exceptions.ArgusError('Networks not found.')
         # Skip external/private networks.
         networks = [net["id"] for net in _networks
-                    if not net["router:external"]]
+                    if not net["router:external"] and
+                    net[u'tenant_id'] == tenant_id]
+
         # Put in front the main private network.
         head = self._get_isolated_network()["id"]
         networks.remove(head)
