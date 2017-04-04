@@ -16,6 +16,7 @@
 from argus.backends.tempest import tempest_backend
 from argus import config as argus_config
 from argus import exceptions
+from argus import log as argus_log
 from argus import util
 
 with util.restore_excepthook():
@@ -23,6 +24,7 @@ with util.restore_excepthook():
     from tempest.common import waiters
 
 CONFIG = argus_config.CONFIG
+LOG = argus_log.LOG
 
 SUBNET6_CIDR = "::ffff:a00:0/120"
 DNSES6 = ["::ffff:808:808", "::ffff:808:404"]
@@ -52,6 +54,8 @@ class NetworkWindowsBackend(tempest_backend.BaseWindowsTempestBackend):
         """
         tenant_id = self._manager.primary_credentials().tenant_id
         _networks = self._manager.networks_client.list_networks()
+        LOG.debug("Tenant id %s", tenant_id)
+        LOG.debug("Networks %r", _networks)
         try:
             _networks = _networks["networks"]
         except KeyError:
@@ -61,10 +65,14 @@ class NetworkWindowsBackend(tempest_backend.BaseWindowsTempestBackend):
                     if not net["router:external"] and
                     net[u'tenant_id'] == tenant_id]
 
+        LOG.debug("ID networks %r", networks)
+
         # Put in front the main private network.
         head = self._get_isolated_network()["id"]
         networks.remove(head)
         networks.insert(0, head)
+        LOG.debug("Final ID networks %r", networks)
+
         # Adapt the list to a format accepted by the API.
         return [{"uuid": net} for net in networks]
 
@@ -130,6 +138,7 @@ class NetworkWindowsBackend(tempest_backend.BaseWindowsTempestBackend):
 
         self._create_private_network()
         self._networks = self._get_networks()
+        LOG.debug("Final networks for instante %r", self._networks)
 
         super(NetworkWindowsBackend, self).setup_instance()
 
