@@ -226,13 +226,16 @@ class CloudbaseinitRecipe(base.BaseCloudbaseinitRecipe):
 
         # Auto-install packages from the new requirements.txt
         python = ntpath.join(python_dir, "python.exe")
-        command = '"{folder}" -m pip install -r {location}\\requirements.txt'
+        command = ('"{folder}" -m pip install -c {constraints} -r '
+                   '{location}\\requirements.txt')
         self._execute(command.format(folder=python,
+                                     constraints=util.UPPER_CONSTRAINTS,
                                      location=_CBINIT_TARGET_LOCATION),
                       command_type=util.CMD)
 
-        command = '"{folder}" -m pip install {location}'
+        command = '"{folder}" -m pip install -c {constraints} {location}'
         self._execute(command.format(folder=python,
+                                     constraints=util.UPPER_CONSTRAINTS,
                                      location=_CBINIT_TARGET_LOCATION),
                       command_type=util.CMD)
 

@@ -69,6 +69,9 @@ SAN_POLICY_ONLINE_STR = 'OnlineAll'
 SAN_POLICY_OFFLINE_STR = 'OfflineAll'
 SAN_POLICY_OFFLINE_SHARED_STR = 'OfflineShared'
 
+UPPER_CONSTRAINTS = ("https://git.openstack.org/cgit/openstack/requirements"
+                     "/plain/upper-constraints.txt")
+
 __all__ = (
     'decrypt_password',
     'get_logger',
