@@ -261,3 +261,10 @@ class ScenarioPasswordLength(BaseWindowsScenario):
 
     test_classes = (test_smoke.TestPasswordLength,)
     recipe_type = recipe.CloudbaseinitPasswordRecipe
+
+
+class ScenarioDigitalOcean(BaseWindowsScenario):
+
+    test_classes = (smoke.TestNoError, )
+    service_type = util.DIGITALOCEAN_SERVICE
+    recipe_type = recipe.DigitalOceanRecipe

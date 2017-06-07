@@ -34,7 +34,8 @@ class BasePopulatedCBInitConfig(base.BaseWindowsConfig):
         util.EC2_SERVICE: "ec2service.EC2Service",
         util.OPEN_NEBULA_SERVICE: "opennebulaservice.OpenNebulaService",
         util.CLOUD_STACK_SERVICE: "cloudstack.CloudStack",
-        util.MAAS_SERVICE: "maasservice.MaaSHttpService"
+        util.MAAS_SERVICE: "maasservice.MaaSHttpService",
+        util.DIGITALOCEAN_SERVICE: "digitalocean.DigitalOceanService"
     }
 
     def __init__(self, client):

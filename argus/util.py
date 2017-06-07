@@ -54,6 +54,7 @@ EC2_SERVICE = 'ec2'
 OPEN_NEBULA_SERVICE = 'opennebula'
 CLOUD_STACK_SERVICE = 'cloudstack'
 MAAS_SERVICE = 'maas'
+DIGITALOCEAN_SERVICE = "digitalocean"
 
 DEFAULT_METADATA_URL = {
     HTTP_SERVICE: "http://169.254.169.254/",
