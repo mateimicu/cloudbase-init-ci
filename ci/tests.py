@@ -222,36 +222,24 @@ class ScenarioLocalScripts(BaseWindowsScenario):
     recipe_type = recipe.CloudbaseinitLocalScriptsRecipe
 
 
-@unittest.skipIf('configdrive_vfat_drive' not in AVAILABILITY_ZONES,
-                 'Needs special availability zone')
 class ScenarioConfigdriveVfatDriveSmoke(BaseWindowsScenario):
     test_classes = (test_smoke.TestSmoke, )
     service_type = util.CONFIG_DRIVE_SERVICE
-    availability_zone = 'configdrive_vfat_drive'
 
 
-@unittest.skipIf('configdrive_vfat_cdrom' not in AVAILABILITY_ZONES,
-                 'Needs special availability zone')
 class ScenarioConfigdriveVfatCdromSmoke(BaseWindowsScenario):
     test_classes = (test_smoke.TestSmoke, )
     service_type = util.CONFIG_DRIVE_SERVICE
-    availability_zone = 'configdrive_vfat_cdrom'
 
 
-@unittest.skipIf('configdrive_iso9660_drive' not in AVAILABILITY_ZONES,
-                 'Needs special availability zone')
 class ScenarioConfigdriveIso9660DriveSmoke(BaseWindowsScenario):
     test_classes = (test_smoke.TestSmoke, )
     service_type = util.CONFIG_DRIVE_SERVICE
-    availability_zone = 'configdrive_iso9660_drive'
 
 
-@unittest.skipIf('configdrive_iso9660_cdrom' not in AVAILABILITY_ZONES,
-                 'Needs special availability zone')
 class ScenarioConfigdriveIso9660CdromSmoke(BaseWindowsScenario):
     test_classes = (test_smoke.TestSmoke, )
     service_type = util.CONFIG_DRIVE_SERVICE
-    availability_zone = 'configdrive_iso9660_cdrom'
 
 
 class ScenarioNetworkConfig(BaseWindowsScenario):
