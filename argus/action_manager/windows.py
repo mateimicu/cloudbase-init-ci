@@ -340,7 +340,7 @@ class WindowsActionManager(base.BaseActionManager):
     def wait_boot_completion(self):
         """Wait for a reasonable amount of time the instance to boot."""
         LOG.info("Waiting for boot completion...")
-        username = CONFIG.openstack.image_username
+        username = self._client.username
         wait_boot_completion(self._client, username)
 
     def specific_prepare(self):

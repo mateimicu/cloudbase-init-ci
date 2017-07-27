@@ -35,6 +35,10 @@ class BaseClient(object):
         self._cert_pem = cert_pem
         self._cert_key = cert_key
 
+    @property
+    def username(self):
+        return self._username
+
     @abc.abstractmethod
     def run_remote_cmd(self, command, command_type=None,
                        upper_timeout=None):
